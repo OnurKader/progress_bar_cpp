@@ -1,4 +1,8 @@
 #include "../include/progress_bar.hpp"
+
+#include <algorithm>
+#include <iostream>
+
 /* Defining the constructor */
 progressBar::progressBar(char notDoneChar, char doneChar, unsigned int size)
 :c(doneChar), ch(notDoneChar), size(size)
@@ -26,7 +30,7 @@ void progressBar::fillUpCells(unsigned int cells)
 	for(int i = 1; i < cells; i++)
 	{
 		bar[i] = c;
-		std::cout << "\r";
+		std::cout << '\r';
 		for(int j = 0; j < bar.size(); j++)
 		{
 			std::cout << bar[j] << std::flush;
@@ -35,7 +39,6 @@ void progressBar::fillUpCells(unsigned int cells)
 	pos += cells;
 	float percent = ((float)pos / (float)(bar.size() - 1)) * 100;
 	std::cout << (int)percent << '%';
-
 }
 
 /* Defining fillUp */
@@ -44,7 +47,7 @@ void progressBar::fillUp()
 	bar[pos] = c;
 	pos++;
 	
-	std::cout << "\r";
+	std::cout << '\r';
 	
 	for(int i = 0; i < bar.size(); i++)
 	{
