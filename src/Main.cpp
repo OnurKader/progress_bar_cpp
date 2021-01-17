@@ -2,9 +2,10 @@
 
 int main()
 {
-	ProgressBar bar {' ', '#', 101};
-	bar.fillUp();
+	ProgressBar bar {' ', '#', 48};
+	bar.fillUpCells(6);
 	bar.displayPercentage();
+	bar.end();
 
 	return 0;
 }

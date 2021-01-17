@@ -17,3 +17,5 @@ includes, cpp_args: compiler_args)
 
 test('Simple Test', exe)
 
+subdir('examples')
+
