@@ -1,15 +1,12 @@
-#include "../include/progress_bar.hpp"
-
-#include <algorithm>
-#include <iostream>
+#include "../include/ProgressBar.hpp"
 
 /* Defining the constructor */
-progressBar::progressBar(char notDoneChar, char doneChar, unsigned int size)
+ProgressBar::ProgressBar(char notDoneChar, char doneChar, unsigned int size)
 :c(doneChar), ch(notDoneChar), size(size)
 {
 	if(size <= 100)
 	{
-		size = size;	
+		size = size;
 	}
 	else{
 		size = 100;
@@ -24,7 +21,7 @@ progressBar::progressBar(char notDoneChar, char doneChar, unsigned int size)
 }
 
 /* Defining fillUpCells */
-void progressBar::fillUpCells(unsigned int cells)
+void ProgressBar::fillUpCells(unsigned int cells)
 {
 	pos = 0;
 	for(int i = 1; i < cells; i++)
@@ -37,28 +34,37 @@ void progressBar::fillUpCells(unsigned int cells)
 		}
 	}
 	pos += cells;
-	float percent = ((float)pos / (float)(bar.size() - 1)) * 100;
-	std::cout << (int)percent << '%';
 }
 
 /* Defining fillUp */
-void progressBar::fillUp()
+void ProgressBar::fillUp()
 {
 	bar[pos] = c;
 	pos++;
-	
+
 	std::cout << '\r';
-	
+
 	for(int i = 0; i < bar.size(); i++)
 	{
 		std::cout << bar[i] << std::flush;
 	}
-
-	float percent = ((float)pos / (float)(bar.size() - 1)) * 100;
-	std::cout << (int)percent << '%';
 }
 
-void progressBar::end()
+/* Displays the percentage beside the bar */
+void ProgressBar::displayPercentage()
+{
+	float percent = ((float)pos / (float)(bar.size() - 1)) * 100;
+	std::cout << (int)percent << "%";
+}
+
+/* Shows tasks done out of the tasks to be done */
+void ProgressBar::displayTasksDone()
+{
+	std::cout << '(' << done << '/' << todo << ')' << std::flush;
+}
+
+void ProgressBar::end()
 {
 	std::cout << std::endl;
 }
+
