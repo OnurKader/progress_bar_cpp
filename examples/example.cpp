@@ -1,30 +1,36 @@
-#include "../include/ProgressBar.hpp"
-#include <unistd.h>
+#include "ProgressBar.hpp"
 
-unsigned int micros = 1000000; // microseconds to seconds
+#include <chrono>
+#include <thread>
+
+using namespace std::chrono_literals;
 
 int main()
 {
-	ProgressBar foo('.', '#', 30); 
+	ProgressBar foo {'.', '#', 30};
 
 	foo.done = 0;
-	foo.todo = 28;
+	foo.todo = 27;
 
-	std::cout << "Doing a task" << std::endl;
+	std::cout << "Doing a task\n";
 
-	for(int i = 0; i < 29; i++)
+	for(std::size_t i = 0; i < foo.todo; ++i)
 	{
-		usleep(0.1 * micros); // A delay of 0.1 second(s)
+		std::this_thread::sleep_for(0.1s);
+
 		foo.fillUp();
+		++foo.done;
+
 		foo.displayPercentage();
+
 		std::cout << " | ";
+
 		foo.displayTasksDone();
-		foo.done++;
 	}
 
 	foo.end();
 
-	std::cout << "Done!" << std::endl;
+	std::cout << "Done!\n";
 
 	return 0;
 }

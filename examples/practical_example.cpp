@@ -1,27 +1,31 @@
-#include <iostream>
+#include "ProgressBar.hpp"
+
 #include <curl/curl.h>
-#include "../include/ProgressBar.hpp"
+#include <iostream>
 
 int main()
 {
 	ProgressBar bar('.', '=', 30);
 
-	std::cout << "Downloading onedark.vim from https://raw.githubusercontent.com/joshdick/onedark.vim/master/colors/onedark.vim" << std::endl;
+	std::cout << "Downloading onedark.vim from "
+				 "https://raw.githubusercontent.com/joshdick/onedark.vim/master/colors/onedark.vim"
+			  << std::endl;
 
-	CURL *downloader = curl_easy_init();
-	FILE *file = fopen("onedark.vim", "w");
+	CURL* downloader = curl_easy_init();
+	FILE* file = fopen("onedark.vim", "w");
 	CURLcode result;
-	std::string url = "https://raw.githubusercontent.com/joshdick/onedark.vim/master/colors/onedark.vim";
-	const char *URL = url.c_str();
+	std::string url =
+		"https://raw.githubusercontent.com/joshdick/onedark.vim/master/colors/onedark.vim";
+	const char* URL = url.c_str();
 	curl_easy_setopt(downloader, CURLOPT_URL, URL);
 	bar.fillUpCells(10);
-	bar.displayPercentage();	
+	bar.displayPercentage();
 	curl_easy_setopt(downloader, CURLOPT_WRITEDATA, file);
-	bar.fillUpCells(20);	
+	bar.fillUpCells(20);
 	bar.displayPercentage();
 	result = curl_easy_perform(downloader);
 	fclose(file);
-	bar.fillUpCells(30);	
+	bar.fillUpCells(30);
 	bar.displayPercentage();
 	curl_easy_cleanup(downloader);
 
